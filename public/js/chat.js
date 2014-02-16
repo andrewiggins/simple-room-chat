@@ -122,9 +122,7 @@ function ChatModel(username, roomName) {
         self.messages.push(new Message(data));
     });
 
-    self.messages = ko.observableArray([
-       new Message(null, username + ' has joined the room.', null)
-    ]);
+    self.messages = ko.observableArray([]);
 
     self.sendMessage = function (message) {
         var timestamp = Date.now();
@@ -134,4 +132,6 @@ function ChatModel(username, roomName) {
 
         self.socket.emit('new-message', message.toObject());
     }
+
+    self.sendMessage(username + ' has joined the room.');
 }

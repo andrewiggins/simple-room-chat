@@ -8,4 +8,3 @@
 * submit button integrated into new message input box
 * page title includes domain and room name
 * show number of people currently in room
-* on disconnect, emit user left room
