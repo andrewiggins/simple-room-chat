@@ -27,7 +27,7 @@ $(document).ready(init);
 var viewModel = null;
 
 function init() {
-    $('#room').focus();
+    initializeRoom();
 
     $('#login-form').on('submit', function (evt) {
         evt.preventDefault();
@@ -53,7 +53,20 @@ function init() {
         viewModel.sendMessage(message);
 
         $message.val('');
+        window.scrollTo(0, document.body.scrollHeight);
     });
+}
+
+function initializeRoom() {
+    var room = location.hash;
+
+    if (room) {
+        room = room.substring(1);
+        $('#room').val(room);
+        $('#username').focus();
+    } else {
+        $('#room').focus();
+    }
 }
 
 function Message(username, message, timestamp) {
@@ -84,6 +97,8 @@ function ChatModel(username, roomName) {
 
     self.room = ko.observable(roomName);
     self.username = username;
+
+    location.hash = '#'+self.room();
 
     self.socket = io.connect(location.origin);
     self.socket.emit('subscribe', { 

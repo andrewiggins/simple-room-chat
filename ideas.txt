@@ -4,3 +4,4 @@
         - showing loading icon after typing in room name
 * timestamps
 * sent/delivered/read receipts
+* changed header and footer to absolute (with parent relative) at some min-height

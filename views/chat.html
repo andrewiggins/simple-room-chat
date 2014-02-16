@@ -5,6 +5,7 @@
     <title>Welcome! - AndreWiggins.com</title>
     <meta name="description" content="Home page for the personal website of Andre Wiggins" />
     <meta name="author" content="Andre Wiggins" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/css/site.css" rel="stylesheet" />
@@ -27,17 +28,17 @@
 </div>
 
 <div id="chat" class="container hidden">
-    <header>
+    <header class="panel-heading">
         <h1 data-bind="text: room">Room Name</h1>
     </header>
-    <ul id="chat-window" class="messages" data-bind="foreach: messages">
+    <ul id="chat-window" class="content messages panel-body" data-bind="foreach: messages">
         <li>
             <span class="username" data-bind="text: username"></span>
             <span class="timestamp" data-bind="text: timestamp"></span>
             <span class="message" data-bind="text: message"></span>
         </li>
     </ul>
-    <footer>
+    <footer class="panel-footer">
         <form id="new-message-form" action="" method="get">
             <input type="text" id="new-message" class="form-control" placehlder="Type your message here..." />
         </form>
