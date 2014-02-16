@@ -25,17 +25,26 @@
 
 module.exports = function (app, socketio) {
 
-    // home page
     app.get('/', function (req, res) {
-        res.render('login');
-    });
-
-    app.get('/:room', function (req, res) {
         res.render('chat');
     });
 
     socketio.sockets.on('connection', function (socket) {
-        console.log('connected');
-    });
+        var room = null;
+        var username = null;
 
+        socket.on('subscribe', function (data) { 
+            room = data.room; 
+            username = data.username;
+
+            socket.join(data.room); 
+
+            console.log(data.username + ' has joined ' + data.room);
+        });
+
+        socket.on('message', function(data) { 
+            socket.broadcast.to(room).emit('message', data) 
+            console.log(data.username + ' sent "' + data.message + '" at ' + data.timestamp);
+        });
+    });
 };

@@ -74,6 +74,10 @@ app.configure(function() {
     app.use(express.static(public_dir));
 });
 
+socketio.configure(function () {
+    socketio.set('log level', 2);
+});
+
 
 
 /**

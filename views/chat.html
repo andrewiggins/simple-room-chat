@@ -9,13 +9,46 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
     <link href="/css/site.css" rel="stylesheet" />
 </head>
-<body class="container">
+<body>
 
+<div id="login" class="container">
+    <h1>Chat Room</h1>
+    <form id="login-form" role="form">
+        <div class="form-group">
+            <label for="room">Room</label>
+            <input class="form-control" type="text" name="room" id="room" placeholder="Enter room to join" required />
+        </div>
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input class="form-control" type="text" name="username" id="username" placeholder="Your username" required />
+        </div>
+        <input type="submit" class="btn btn-default" value="Submit" />
+    </form>
+</div>
 
+<div id="chat" class="container hidden">
+    <header>
+        <h1 data-bind="text: room">Room Name</h1>
+    </header>
+    <ul id="chat-window" class="messages" data-bind="foreach: messages">
+        <li>
+            <span class="username" data-bind="text: username"></span>
+            <span class="timestamp" data-bind="text: timestamp"></span>
+            <span class="message" data-bind="text: message"></span>
+        </li>
+    </ul>
+    <footer>
+        <form id="new-message-form" action="" method="get">
+            <input type="text" id="new-message" class="form-control" placehlder="Type your message here..." />
+        </form>
+    </footer>
+</div>
 
 <script src="/socket.io/socket.io.js"></script>
 <script src="/js/lib/jquery-2.1.0.min.js"></script>
 <script src="/js/lib/bootstrap.min.js"></script>
+<script src="/js/lib/knockout-3.0.0.js"></script>
+<script src="/js/chat.js"></script>
 
 </body>
 </html>

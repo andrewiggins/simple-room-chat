@@ -29,3 +29,19 @@ h1 {
 .container {
   max-width: 450px;
 }
+
+.hidden {
+  display: none;
+}
+
+.messages {
+  list-style: none;
+  padding: 0;
+}
+
+#new-message-form {
+  position: fixed;
+  bottom: 20px;
+  width: 100%;
+  max-width: 420px;
+}
