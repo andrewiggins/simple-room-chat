@@ -118,7 +118,7 @@ function ChatModel(username, roomName) {
         'room': roomName,
         'username': username
     });
-    self.socket.on('message', function (data) {
+    self.socket.on('new-message', function (data) {
         self.messages.push(new Message(data));
     });
 
@@ -132,6 +132,6 @@ function ChatModel(username, roomName) {
 
         self.messages.push(message);    
 
-        self.socket.emit('message', message.toObject());
+        self.socket.emit('new-message', message.toObject());
     }
 }

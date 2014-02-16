@@ -42,8 +42,8 @@ module.exports = function (app, socketio) {
             console.log(data.username + ' has joined ' + data.room);
         });
 
-        socket.on('message', function(data) { 
-            socket.broadcast.to(room).emit('message', data) 
+        socket.on('new-message', function(data) { 
+            socket.broadcast.to(room).emit('new-message', data) 
             console.log(data.username + ' sent "' + data.message + '" at ' + data.timestamp);
         });
     });

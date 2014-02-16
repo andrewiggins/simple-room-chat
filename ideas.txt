@@ -5,3 +5,7 @@
 * timestamps
 * sent/delivered/read receipts
 * changed header and footer to absolute (with parent relative) at some min-height
+* submit button integrated into new message input box
+* page title includes domain and room name
+* show number of people currently in room
+* on disconnect, emit user left room
