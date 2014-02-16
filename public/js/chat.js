@@ -27,6 +27,8 @@ $(document).ready(init);
 var viewModel = null;
 
 function init() {
+    initDebug();
+
     initializeRoom();
 
     adjustMinHeight();
@@ -134,4 +136,11 @@ function ChatModel(username, roomName) {
     }
 
     self.sendMessage(username + ' has joined the room.');
+}
+
+
+function initDebug() {
+    $('#chat header').on('click', function () {
+        $('#chat').toggleClass('well-alt');
+    });
 }
