@@ -21,7 +21,8 @@
   "dependencies" : {
     "swig": "1.0.0",
     "express": "~3.3.6",
-    "socket.io": ""
+    "socket.io": "",
+    "less-middleware": "~0.1.12"
   },
   "noAnalyze": true,
   "license": "Apache",

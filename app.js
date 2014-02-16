@@ -37,7 +37,8 @@ var express = require('express')
 
 // Other dependencies
 var path = require('path')
-  , swig = require('swig');
+  , swig = require('swig')
+  , less = require('less-middleware');
 
 
 
@@ -71,6 +72,7 @@ app.configure(function() {
     app.use(app.router);
 
     var public_dir = path.join(__dirname, 'public');
+    app.use(less({ src: public_dir }));
     app.use(express.static(public_dir));
 });
 
