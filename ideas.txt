@@ -1,0 +1,6 @@
+* Password protected rooms:
+    - check if room exists before submitting
+    - require password if needed
+        - showing loading icon after typing in room name
+* timestamps
+* sent/delivered/read receipts
