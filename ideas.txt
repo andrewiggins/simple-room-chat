@@ -12,7 +12,6 @@ Basic
     - same month: show month/date
     - same year: show month/date
     - different year: show month/date/year
-* submit button integrated into new message input box
 
 
 Storage
