@@ -1,9 +1,14 @@
+Infrastructure
+==============
+* handle disconnect on client
+    * show message if connection lost with server
+    * on reconnect emit 'subscribe' event
+* sent/delivered/read receipts
+
 Basic
 =====
 * timestamps
 * page title includes domain and room name
-* show message if connection lost with server
-* sent/delivered/read receipts
 * changed header and footer to absolute (with parent relative) at some min-height
 * click dates to show full dates
 * data algorithm
