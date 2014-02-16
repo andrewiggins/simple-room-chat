@@ -29,6 +29,9 @@ var viewModel = null;
 function init() {
     initializeRoom();
 
+    adjustMinHeight();
+    $(window).on('resize', adjustMinHeight);
+
     $('#login-form').on('submit', function (evt) {
         evt.preventDefault();
 
@@ -55,6 +58,16 @@ function init() {
         $message.val('');
         window.scrollTo(0, document.body.scrollHeight);
     });
+}
+
+function adjustMinHeight() {
+    var $content = $('#chat .content');
+    var marginTop = parseInt($content.css('margin-top'));
+    var marginBottom = parseInt($content.css('margin-bottom'));
+    var windowHeight = $(window).height();
+
+    var minHeight = windowHeight - marginTop - marginBottom;
+    $('#chat .content').css({'min-height': minHeight});
 }
 
 function initializeRoom() {
