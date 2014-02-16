@@ -1,0 +1,34 @@
+{
+  "name": "Chat",
+  "version": "0.0.1",
+  "author": "Andre Wiggins <andrewiggins@live.com>",
+  "description": "Simple Chat Server",
+  "contributors": [ 
+    {
+      "name": "Andre Wiggins",
+      "email": "andrewiggins@live.com"
+    }
+  ],  
+  "main": "./app.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [
+    "personal",
+    "express"
+  ],
+  "dependencies" : {
+    "swig": "1.0.0",
+    "express": "~3.3.6",
+    "socket.io": ""
+  },
+  "noAnalyze": true,
+  "license": "Apache",
+  "engines": {
+    "node": ">= 0.10.0"
+  },
+  "scripts": {
+    "start": "node server"
+  }
+}
