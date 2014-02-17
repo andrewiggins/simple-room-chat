@@ -1,17 +1,15 @@
 Infrastructure
 ==============
 * sent/delivered/read receipts
-    * socket callbacks
-    * broadcast messages to everyone including sender, using message id to match
+    - socket callbacks
+    - broadcast messages to everyone including sender, using message id to match
       messages a person sent
 
 Basic
 =====
-* changed header and footer to absolute (with parent relative) at some 
-  max-height (320px?)
 * animation: click dates to show full dates
 * scroll to new message if user's scroll position is within one message of bottom
-    * display notification is user is not at bottom and new message arrives
+    - display notification is user is not at bottom and new message arrives
 * data algorithm (look at using date.js)
     - 0 - 5 minutes ago: nothing
     - 0 - 1 hour ago: minutes ago

@@ -40,6 +40,7 @@ h1 {
 /* Panel styling inspired by bootstrap */
 
 #chat {
+  position: relative;
   padding-left: 0px;
   padding-right: 0px;
   /*
@@ -195,10 +196,10 @@ h1 {
 @media (max-height: 500px) {
   #chat {
     header h1 {
-        font-size: 16px;
-        line-height: 24px;
-        margin-top: 0px;
-        margin-bottom: 0px;
+      font-size: 16px;
+      line-height: 24px;
+      margin-top: 0px;
+      margin-bottom: 0px;
     }
 
     .content {
@@ -211,5 +212,12 @@ h1 {
       top: @mobile-header-height;
     }
 
+  }
+}
+
+@media (max-height: 320px) {
+  #chat header,
+  #chat footer {
+    position: absolute;
   }
 }

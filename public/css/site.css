@@ -33,6 +33,7 @@ h1 {
 }
 /* Panel styling inspired by bootstrap */
 #chat {
+  position: relative;
   padding-left: 0px;
   padding-right: 0px;
   /*
@@ -167,5 +168,11 @@ h1 {
   }
   #chat.well-alt #chat-viewport {
     top: 46px;
+  }
+}
+@media (max-height: 320px) {
+  #chat header,
+  #chat footer {
+    position: absolute;
   }
 }
