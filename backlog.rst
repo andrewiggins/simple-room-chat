@@ -1,8 +1,5 @@
 Infrastructure
 ==============
-* handle disconnect on client
-    * show message if connection lost with server
-    * on reconnect emit 'subscribe' event
 * sent/delivered/read receipts
 
 Basic

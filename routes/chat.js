@@ -50,6 +50,7 @@ module.exports = function (app, socketio) {
 
         socket.on('disconnect', function () {
             var data = {
+                'username': username,
                 'message': username + ' has left the room', 
                 'timestamp': Date.now()
             };

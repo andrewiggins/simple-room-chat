@@ -110,21 +110,30 @@ function Message(username, message, timestamp) {
 function ChatModel(username, roomName) {
     var self = this;
 
-    self.room = ko.observable(roomName);
-    self.username = username;
+    function init(username, roomName) {
+        self.room = ko.observable(roomName);
+        self.username = username;
+        self.messages = ko.observableArray([]);
 
-    location.hash = '#'+self.room();
+        location.hash = '#'+self.room();
 
-    self.socket = io.connect(location.origin);
-    self.socket.emit('subscribe', { 
-        'room': roomName,
-        'username': username
-    });
-    self.socket.on('new-message', function (data) {
-        self.messages.push(new Message(data));
-    });
+        initSocket();
+        self.subscribe();
+    }
 
-    self.messages = ko.observableArray([]);
+    function initSocket() {
+        self.socket = io.connect(location.origin);
+        self.socket.on('new-message', function (data) {
+            self.messages.push(new Message(data));
+        });
+        self.socket.on('disconnect', function () {
+            var message = "You have been disconnected frome the server";
+            self.messages.push(new Message(self.username, message, Date.now()));
+        });
+        self.socket.on('reconnect', function () {
+            self.subscribe();
+        });
+    }
 
     self.sendMessage = function (message) {
         var timestamp = Date.now();
@@ -135,7 +144,15 @@ function ChatModel(username, roomName) {
         self.socket.emit('new-message', message.toObject());
     }
 
-    self.sendMessage(username + ' has joined the room.');
+    self.subscribe = function () {
+        self.socket.emit('subscribe', { 
+            'room': self.room(),
+            'username': self.username
+        });
+        self.sendMessage(username + ' has joined the room.');
+    };
+
+    init(username, roomName);
 }
 
 
