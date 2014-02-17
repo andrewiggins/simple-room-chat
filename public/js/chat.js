@@ -75,6 +75,7 @@ function adjustMinHeight() {
 
     var minHeight = windowHeight - marginTop - marginBottom;
     $('#chat .content').css({'min-height': minHeight});
+    $('#chat-viewport').css({'height': minHeight+1});
 }
 
 

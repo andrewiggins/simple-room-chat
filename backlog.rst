@@ -7,8 +7,11 @@ Infrastructure
 Basic
 =====
 * page title includes domain and room name
-* changed header and footer to absolute (with parent relative) at some max-height (320px?)
-* click dates to show full dates
+* changed header and footer to absolute (with parent relative) at some 
+  max-height (320px?)
+* animation: click dates to show full dates
+* scroll to new message if user's scroll position is within one message of the 
+  bottom
 * data algorithm (look at using date.js)
     - 0 - 5 minutes ago: nothing
     - 0 - 1 hour ago: minutes ago
@@ -29,6 +32,7 @@ Storage
         - show password box with help message only if room requires it
         - showing loading icon after typing in room name? or
         - only show icon on error
-   - disable submit button until room is checked for password and inputs are valid
+   - disable submit button until room is checked for password and inputs are 
+     valid
 * show number of people currently in room
 * use HTML5 keygen attribute to encrypt messages

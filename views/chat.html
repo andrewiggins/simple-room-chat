@@ -31,6 +31,7 @@
     <header class="panel-heading">
         <h1 data-bind="text: room">Room Name</h1>
     </header>
+    <div id="chat-viewport"></div>
     <ul id="chat-window" class="content messages panel-body" data-bind="foreach: messages">
         <li data-bind="css: { collapse: isCollapsed() && !$root.isVerbose() }">
             <small class="username text-muted" data-bind="text: username"></small>
