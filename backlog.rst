@@ -7,6 +7,9 @@ Infrastructure
 
 Basic
 =====
+* validate non-empty values on login and chat views
+* hide username input-group-addon on small width (320px?) screens
+    - show username elsewhere (title? placeholder text?)
 * animation: click dates to show full dates
 * scroll to new message if user's scroll position is within one message of bottom
     - display notification is user is not at bottom and new message arrives
