@@ -32,9 +32,9 @@
         <h1 data-bind="text: room">Room Name</h1>
     </header>
     <ul id="chat-window" class="content messages panel-body" data-bind="foreach: messages">
-        <li>
-            <span class="username" data-bind="text: username"></span>
-            <span class="timestamp" data-bind="text: timestamp"></span>
+        <li data-bind="css: { collapse: isCollapsed() && !$root.isVerbose() }">
+            <small class="username text-muted" data-bind="text: username"></small>
+            <small class="timestamp text-muted" data-bind="text: dateString"></small>
             <span class="message" data-bind="text: message"></span>
         </li>
     </ul>

@@ -1,16 +1,21 @@
 Infrastructure
 ==============
+* build control messages
+    * design control look and feel of control messages (<em>? centered?)
 * sent/delivered/read receipts
 
 Basic
 =====
-* timestamps
 * page title includes domain and room name
-* changed header and footer to absolute (with parent relative) at some min-height
+* changed header and footer to absolute (with parent relative) at some max-height (320px?)
 * click dates to show full dates
-* data algorithm
+* data algorithm (look at using date.js)
+    - 0 - 5 minutes ago: nothing
+    - 0 - 1 hour ago: minutes ago
+    - 1 - 1.5 hours ago: 1 hour ago
+    - 1.5 - 2 hours ago: 2 hours ago
     - same day: show time
-    - same week: show weekday and time
+    - 3 days ago: show weekday and time
     - same month: show month/date
     - same year: show month/date
     - different year: show month/date/year

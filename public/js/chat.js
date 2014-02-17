@@ -22,9 +22,9 @@
  *
  ******************************************************************************/
 
+var viewModel = null;
 $(document).ready(init);
 
-var viewModel = null;
 
 function init() {
     initDebug();
@@ -60,7 +60,12 @@ function init() {
         $message.val('');
         window.scrollTo(0, document.body.scrollHeight);
     });
+
+    $('.messages').on('click', '.timestamp', function (evt) {
+        viewModel.toggleVerbose();
+    });
 }
+
 
 function adjustMinHeight() {
     var $content = $('#chat .content');
@@ -71,6 +76,7 @@ function adjustMinHeight() {
     var minHeight = windowHeight - marginTop - marginBottom;
     $('#chat .content').css({'min-height': minHeight});
 }
+
 
 function initializeRoom() {
     var room = location.hash;
@@ -84,19 +90,19 @@ function initializeRoom() {
     }
 }
 
-function Message(username, message, timestamp) {
-    var self = this;
 
-    if (message === undefined && timestamp === undefined) {
-        var data = username;
-        message = data.message;
-        timestamp = data.timestamp;
-        username = data.username;
-    }
+function Message(username, message, timestamp, previousMessage) {
+    var self = this;
 
     self.username = username;
     self.message = message;
     self.timestamp = timestamp;
+    self.previousMessage = previousMessage;
+
+    self.dateString = ko.computed(function () {
+        var date = new Date(this.timestamp);
+        return date.toLocaleString();
+    }, self);
 
     self.toObject = function () {
         return {
@@ -105,7 +111,23 @@ function Message(username, message, timestamp) {
             timestamp: timestamp,
         };
     }
+
+    self.isCollapsed = ko.computed(function () {
+        var fiveMinutes = 300000; // milliseconds
+
+        if (!this.previousMessage) {
+            return false;
+        }
+
+        if (this.username === this.previousMessage.username &&
+            this.timestamp - this.previousMessage.timestamp < fiveMinutes) {
+            return true;
+        }
+
+        return false;
+    }, self);
 }
+
 
 function ChatModel(username, roomName) {
     var self = this;
@@ -124,24 +146,53 @@ function ChatModel(username, roomName) {
     function initSocket() {
         self.socket = io.connect(location.origin);
         self.socket.on('new-message', function (data) {
-            self.messages.push(new Message(data));
+            self.addMessage(data);
         });
         self.socket.on('disconnect', function () {
             var message = "You have been disconnected frome the server";
-            self.messages.push(new Message(self.username, message, Date.now()));
+            self.addMessage(message);
         });
         self.socket.on('reconnect', function () {
             self.subscribe();
         });
     }
 
+    self.isVerbose = ko.observable(false);
+
+    self.toggleVerbose = function () {
+        self.isVerbose(!self.isVerbose());
+    };
+
+    self.addMessage = function (data, username, timestamp) {
+        var message = data;
+        if (typeof(data) === 'object') {
+            username = data.username;
+            timestamp = data.timestamp;
+            message = data.message;
+        }
+
+        if (username === undefined) {
+            username = self.username;
+        }
+
+        if (timestamp === undefined) {
+            timestamp = Date.now();
+        }
+
+        var prev = null;
+        if (self.messages().length > 0) {
+            prev = self.messages.slice(-1)[0];
+        }
+
+        var newMessage = new Message(username, message, timestamp, prev);
+        self.messages.push(newMessage);
+
+        return newMessage;
+    };
+
     self.sendMessage = function (message) {
-        var timestamp = Date.now();
-        var message = new Message(self.username, message, timestamp);
-
-        self.messages.push(message);    
-
-        self.socket.emit('new-message', message.toObject());
+        var messageModel = self.addMessage(message);
+        self.socket.emit('new-message', messageModel.toObject());
     }
 
     self.subscribe = function () {

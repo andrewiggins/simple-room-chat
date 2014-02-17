@@ -26,7 +26,7 @@ h1 {
   font-size: 38.5px;
 }
 
-@max-width: 450px;
+@max-width: 480px;
 @well-bg: #f5f5f5;
 @border-color: #ddd;
 
@@ -36,10 +36,6 @@ h1 {
 
 .hidden {
   display: none;
-}
-
-.messages {
-  list-style: none;
 }
 
 /* Panel styling inspired by bootstrap */
@@ -86,6 +82,45 @@ h1 {
     margin-bottom: 20px;
     */
   }
+
+  ul.messages {
+    list-style: none;
+
+    li {
+      margin-top: 15px;
+      border-top: 1px solid #ddd;
+      padding-top: 15px;
+
+      .username {
+        float: left;
+      }
+
+      .timestamp {
+        float: right;
+      }
+
+      .message {
+        display: block;
+        clear: both;
+      }
+    }
+
+    li.collapse,
+    li:first-child {
+      display: block; /* override bootstrap collapse class */
+      padding-top: 0px;
+      margin-top: 0px;
+      border-top: none;
+    }
+
+    li.collapse small {
+      display: none;
+    }
+
+    li:last-child {
+      padding-bottom: 0px;
+    }
+  }
 }
 
 #chat.well-alt {
@@ -115,6 +150,21 @@ h1 {
 
     input {
       padding: 6px 15px;
+    }
+  }
+}
+
+@media (max-height: 500px) {
+  #chat {
+    header h1 {
+        font-size: 16px;
+        line-height: 24px;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+    .content {
+      margin-top: 46px;
     }
   }
 }
