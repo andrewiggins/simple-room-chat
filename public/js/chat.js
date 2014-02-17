@@ -40,6 +40,8 @@ function init() {
         var room = $('#room').val();
         var username = $('#username').val();
 
+        document.title = room + ' - AndreWiggins.com';
+
         $('#login').addClass('hidden');
         $('#chat').removeClass('hidden');
 
