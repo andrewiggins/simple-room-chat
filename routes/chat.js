@@ -39,25 +39,26 @@ module.exports = function (app, socketio) {
 
             socket.join(data.room); 
 
-            console.log(data.username + ' has joined ' + data.room);
+            console.log('Subscribe:', data);
         });
 
         socket.on('new-message', function (data) { 
             socket.broadcast.to(room).emit('new-message', data);
 
-            console.log(data.username + ' sent "' + data.message + '" at ' + data.timestamp);
+            console.log('New message:', data);
         });
 
         socket.on('disconnect', function () {
             var data = {
-                'username': username,
+                'type': 'control',
                 'message': username + ' has left the room', 
+                'username': username,
                 'timestamp': Date.now()
             };
 
             socket.broadcast.to(room).emit('new-message', data);
 
-            console.log(data.message + ' at ' + data.timestamp);
+            console.log('Disconnect:', data);
         });
     });
 };

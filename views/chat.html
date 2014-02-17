@@ -7,7 +7,7 @@
     <meta name="author" content="Andre Wiggins" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
-    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/lib/bootstrap.min.css" rel="stylesheet"/>
     <link href="/css/site.css" rel="stylesheet" />
 </head>
 <body>
@@ -33,7 +33,7 @@
     </header>
     <div id="chat-viewport"></div>
     <ul id="chat-window" class="content messages panel-body" data-bind="foreach: messages">
-        <li data-bind="css: { collapse: isCollapsed() && !$root.isVerbose() }">
+        <li data-bind="css: cssClass()">
             <small class="username text-muted" data-bind="text: username"></small>
             <small class="timestamp text-muted" data-bind="text: dateString"></small>
             <span class="message" data-bind="text: message"></span>

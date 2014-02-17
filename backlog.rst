@@ -1,11 +1,13 @@
 Infrastructure
 ==============
-* build control messages
-    * design control look and feel of control messages (<em>? centered?)
 * sent/delivered/read receipts
+    * socket callbacks
+    * broadcast messages to everyone including sender, using message id to match
+      messages a person sent
 
 Basic
 =====
+* display username on page
 * page title includes domain and room name
 * changed header and footer to absolute (with parent relative) at some 
   max-height (320px?)

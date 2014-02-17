@@ -55,7 +55,7 @@ function init() {
         var $message = $('#new-message');
 
         var message = $message.val();
-        viewModel.sendMessage(message);
+        viewModel.sendUserMessage(message);
 
         $message.val('');
         window.scrollTo(0, document.body.scrollHeight);
@@ -92,46 +92,83 @@ function initializeRoom() {
 }
 
 
-function Message(username, message, timestamp, previousMessage) {
+function Message(type, message, username, timestamp, previousMessage) {
     var self = this;
 
-    self.username = username;
-    self.message = message;
-    self.timestamp = timestamp;
-    self.previousMessage = previousMessage;
+    function init() {
+        self.type = type;
+        self.message = message;
+        self.username = username;
+        self.timestamp = timestamp;
+        self.previousMessage = previousMessage;
 
-    self.dateString = ko.computed(function () {
-        var date = new Date(this.timestamp);
-        return date.toLocaleString();
-    }, self);
+        self.dateString = ko.computed(_dateString, self);
+        self.isCollapsed = ko.computed(_isCollapsed, self);
+        self.cssClass = ko.computed(_cssClass, self);
+    }
 
-    self.toObject = function () {
+    this.toObject = function () {
         return {
-            username: username,
-            message: message,
-            timestamp: timestamp,
+            type: self.type,
+            message: self.message,
+            username: self.username,
+            timestamp: self.timestamp,
         };
     }
 
-    self.isCollapsed = ko.computed(function () {
-        var fiveMinutes = 300000; // milliseconds
+    function _dateString () {
+        var date = new Date(this.timestamp);
+        return date.toLocaleString();
+    }
 
+    function _cssClass () {
+        var classes = [this.type];
+
+        if (this.isCollapsed()) {
+            classes.push('collapse');
+        }
+
+        return classes.join(' ');
+    }
+
+    function _isCollapsed () {
         if (!this.previousMessage) {
             return false;
         }
 
-        if (this.username === this.previousMessage.username &&
-            this.timestamp - this.previousMessage.timestamp < fiveMinutes) {
+        if (!viewModel.isVerbose() && collapseMessages(this, this.previousMessage)) {
             return true;
         }
 
         return false;
-    }, self);
+    }
+
+    function collapseMessages(msg1, msg2) {
+        var fiveMinutes = 300000; // milliseconds
+
+        if (msg1.type !== msg2.type) {
+            return false;
+        }
+
+        var result = false;
+        if (msg1.type === 'control') {
+            result = msg1.type === msg2.type;
+        } else {
+            result = msg1.username === msg2.username &&
+                     Math.abs(msg1.timestamp - msg2.timestamp) < fiveMinutes;
+        }
+        
+        return result;
+    }
+
+    init();
 }
 
 
 function ChatModel(username, roomName) {
     var self = this;
+    var userMessage = 'user';
+    var controlMessage = 'control';
 
     function init(username, roomName) {
         self.room = ko.observable(roomName);
@@ -150,8 +187,8 @@ function ChatModel(username, roomName) {
             self.addMessage(data);
         });
         self.socket.on('disconnect', function () {
-            var message = "You have been disconnected frome the server";
-            self.addMessage(message);
+            var message = "You have been disconnected from the server";
+            self.addMessage(controlMessage, message);
         });
         self.socket.on('reconnect', function () {
             self.subscribe();
@@ -164,12 +201,13 @@ function ChatModel(username, roomName) {
         self.isVerbose(!self.isVerbose());
     };
 
-    self.addMessage = function (data, username, timestamp) {
-        var message = data;
+    self.addMessage = function (data, message, username, timestamp) {
+        var type = data;
         if (typeof(data) === 'object') {
+            message = data.message;
             username = data.username;
             timestamp = data.timestamp;
-            message = data.message;
+            type = data.type;
         }
 
         if (username === undefined) {
@@ -185,14 +223,22 @@ function ChatModel(username, roomName) {
             prev = self.messages.slice(-1)[0];
         }
 
-        var newMessage = new Message(username, message, timestamp, prev);
+        var newMessage = new Message(type, message, username, timestamp, prev);
         self.messages.push(newMessage);
 
         return newMessage;
     };
 
-    self.sendMessage = function (message) {
-        var messageModel = self.addMessage(message);
+    self.sendUserMessage = function (message) {
+      self.sendMessage(userMessage, message);
+    }
+
+    self.sendControlMessage = function (message) {
+      self.sendMessage(controlMessage, message);
+    }
+
+    self.sendMessage = function (type, message) {
+        var messageModel = self.addMessage(type, message);
         self.socket.emit('new-message', messageModel.toObject());
     }
 
@@ -201,7 +247,7 @@ function ChatModel(username, roomName) {
             'room': self.room(),
             'username': self.username
         });
-        self.sendMessage(username + ' has joined the room.');
+        self.sendControlMessage(username + ' has joined the room.');
     };
 
     init(username, roomName);
