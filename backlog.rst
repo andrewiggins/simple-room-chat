@@ -7,13 +7,11 @@ Infrastructure
 
 Basic
 =====
-* display username on page
-* page title includes domain and room name
 * changed header and footer to absolute (with parent relative) at some 
   max-height (320px?)
 * animation: click dates to show full dates
-* scroll to new message if user's scroll position is within one message of the 
-  bottom
+* scroll to new message if user's scroll position is within one message of bottom
+    * display notification is user is not at bottom and new message arrives
 * data algorithm (look at using date.js)
     - 0 - 5 minutes ago: nothing
     - 0 - 1 hour ago: minutes ago

@@ -40,13 +40,12 @@
         </li>
     </ul>
     <footer class="panel-footer">
-        <form id="new-message-form" action="" method="get">
-            <div class="input-group">
-                <input type="text" id="new-message" class="form-control" placehlder="Type your message here..." />
-                <span class="input-group-btn">
-                    <input class="btn btn-default" type="submit" value="Send" />
-                </span>
-            </div>
+        <form id="new-message-form" action="" method="get" class="input-group">
+            <span class="input-group-addon username" data-bind="text: username"></span>
+            <input type="text" id="new-message" class="form-control" placehlder="Type your message here..." />
+            <span class="input-group-btn">
+                <input class="btn btn-default" type="submit" value="Send" />
+            </span>
         </form>
     </footer>
 </div>
