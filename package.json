@@ -1,8 +1,8 @@
 {
-  "name": "Chat",
+  "name": "simple-room-chat",
   "version": "0.0.1",
   "author": "Andre Wiggins <andrewiggins@live.com>",
-  "description": "Simple Chat Server",
+  "description": "Simple NodeJS chat server",
   "contributors": [ 
     {
       "name": "Andre Wiggins",
@@ -12,11 +12,13 @@
   "main": "./app.js",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/andrewiggins/simple-room-chat.git"
   },
   "keywords": [
     "personal",
-    "express"
+    "express",
+    "socket.io",
+    "chat"
   ],
   "dependencies" : {
     "swig": "1.0.0",
@@ -25,11 +27,11 @@
     "less-middleware": "~0.1.12"
   },
   "noAnalyze": true,
-  "license": "Apache",
+  "license": "MIT",
   "engines": {
     "node": ">= 0.10.0"
   },
   "scripts": {
-    "start": "node server"
+    "start": "node app.js"
   }
 }
